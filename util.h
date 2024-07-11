@@ -8,6 +8,12 @@
 
 #define ALWAYS 1
 
+#define QUESTION_CHAR '?'
+#define EQUAL_CHAR '='
+#define AND_CHAR '&'
+#define DOLLAR_CHAR '$'
+#define CARROT_CHAR '^'
+
 #define SPACE_CHAR ' '
 #define TAB_CHAR '\t'
 #define NEWLINE_CHAR '\n'
