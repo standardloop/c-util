@@ -50,7 +50,7 @@ extern bool IsCharInString(const char *, char);
 extern size_t NumCharInString(const char *, char);
 extern char *QuickAllocatedString(char *);
 extern void PrintSpaces(int);
-extern void PrintStringDebug(char *, size_t);
+extern void PrintBuffer(char *, size_t, bool);
 // ————————— UTIL END —————————
 
 // ————————— ENV START —————————

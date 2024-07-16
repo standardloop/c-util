@@ -8,6 +8,27 @@
 
 #include "./util.h"
 
+extern void PrintBuffer(char *buffer, size_t buffer_size, bool print_code)
+{
+    char *buffer_ptr = buffer;
+    size_t i = 0;
+    while (i < buffer_size && buffer_ptr != NULL && *buffer_ptr != '\0')
+    {
+        if (print_code)
+        {
+            printf(" %d", *buffer_ptr);
+        }
+        else
+        {
+            printf("%c", *buffer_ptr);
+        }
+
+        i++;
+        buffer_ptr++;
+    }
+    buffer_ptr = NULL;
+}
+
 extern bool IsCharInString(const char *input_str, char checker)
 {
     while (*input_str != NULL_CHAR)
@@ -48,17 +69,6 @@ extern void PrintSpaces(int depth)
     for (int i = 0; i < depth; i++)
     {
         printf(" ");
-    }
-}
-
-extern void PrintStringDebug(char *input_str, size_t input_str_len)
-{
-    if (input_str == NULL || input_str_len == 0)
-    {
-    }
-    for (size_t i = 0; i < input_str_len; i++)
-    {
-        printf("%d\n", input_str[i]);
     }
 }
 
