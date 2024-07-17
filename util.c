@@ -16,7 +16,7 @@ extern void PrintBuffer(char *buffer, size_t buffer_size, bool print_code)
     {
         if (print_code)
         {
-            printf(" %d", *buffer_ptr);
+            printf("%d ", *buffer_ptr);
         }
         else
         {
