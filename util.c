@@ -12,7 +12,7 @@ extern void PrintBuffer(char *buffer, size_t buffer_size, bool print_code)
 {
     char *buffer_ptr = buffer;
     size_t i = 0;
-    while (i < buffer_size && buffer_ptr != NULL && *buffer_ptr != '\0')
+    while (i < buffer_size && buffer_ptr != NULL && *buffer_ptr != NULL_CHAR)
     {
         if (print_code)
         {
@@ -26,7 +26,6 @@ extern void PrintBuffer(char *buffer, size_t buffer_size, bool print_code)
         i++;
         buffer_ptr++;
     }
-    buffer_ptr = NULL;
 }
 
 extern bool IsCharInString(const char *input_str, char checker)
