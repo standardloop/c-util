@@ -44,7 +44,7 @@
 // TODO: combine these 3 functions after library is built
 extern void CopyString(char *, char *, size_t, size_t);
 extern void CopyStringCanary(char *, char *, u_int64_t);
-extern void CopyStringServer(char *, char *, size_t, size_t);
+extern void CopyStringServer(char *, char *, size_t, size_t, bool);
 
 extern bool IsCharInString(const char *, char);
 extern size_t NumCharInString(const char *, char);

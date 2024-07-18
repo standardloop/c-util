@@ -100,7 +100,7 @@ extern void CopyStringCanary(char *des, char *src, u_int64_t des_offset)
     }
 }
 
-extern void CopyStringServer(char *src, char *des, size_t len, size_t des_offset)
+extern void CopyStringServer(char *src, char *des, size_t len, size_t des_offset, bool lower)
 {
     if (src == NULL || des == NULL || len <= 0)
     {
@@ -112,7 +112,15 @@ extern void CopyStringServer(char *src, char *des, size_t len, size_t des_offset
     size_t size = 0;
     while (size < len)
     {
-        *dest_it = *src_it;
+        if (lower)
+        {
+            *dest_it = tolower(*src_it);
+        }
+        else
+        {
+            *dest_it = *src_it;
+        }
+
         dest_it++;
         src_it++;
         size++;
