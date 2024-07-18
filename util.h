@@ -51,6 +51,9 @@ extern size_t NumCharInString(const char *, char);
 extern char *QuickAllocatedString(char *);
 extern void PrintSpaces(int);
 extern void PrintBuffer(char *, size_t, bool);
+
+extern void StringToLower(char *);
+extern void StringToUpper(char *);
 // ————————— UTIL END —————————
 
 // ————————— ENV START —————————

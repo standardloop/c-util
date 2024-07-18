@@ -118,3 +118,18 @@ extern void CopyStringServer(char *src, char *des, size_t len, size_t des_offset
         size++;
     }
 }
+
+extern void StringToLower(char *s)
+{
+    for (; *s; ++s)
+    {
+        *s = tolower(*s);
+    }
+}
+extern void StringToUpper(char *s)
+{
+    for (; *s; ++s)
+    {
+        *s = toupper(*s);
+    }
+}
