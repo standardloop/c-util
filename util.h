@@ -54,6 +54,8 @@ extern void PrintBuffer(char *, size_t, bool);
 
 extern void StringToLower(char *);
 extern void StringToUpper(char *);
+
+extern char *PutQuotesAroundString(char *, bool);
 // ————————— UTIL END —————————
 
 // ————————— ENV START —————————
