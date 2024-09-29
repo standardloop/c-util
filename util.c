@@ -57,8 +57,17 @@ extern size_t NumCharInString(const char *input_str, char checker)
 
 extern char *QuickAllocatedString(char *copy)
 {
+    if (copy == NULL)
+    {
+        return NULL;
+    }
     size_t true_len = strlen(copy) + 1;
     char *allocated_string = malloc(sizeof(char) * true_len);
+    if (allocated_string == NULL)
+    {
+        return NULL;
+    }
+
     strcpy(allocated_string, copy);
     return allocated_string;
 }
