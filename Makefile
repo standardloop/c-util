@@ -40,6 +40,11 @@ build_optimize:
 	-O3 \
 	-o $(EXECUTABLE_NAME)-optimize
 
+run_optimize:
+	@./$(EXECUTABLE_NAME)-optimize
+
+sanitize: build_sanitize run_sanitize
+
 build_sanitize:
 	@$(CC) $(CC_FLAGS) \
 	main.c \
@@ -48,8 +53,8 @@ build_sanitize:
 	$(SOURCE_FILES) \
 	-o $(EXECUTABLE_NAME)-sanitize
 
-run_optimize:
-	@./$(EXECUTABLE_NAME)-optimize
+run_sanitize:
+	@./$(EXECUTABLE_NAME)-sanitize
 
 release: build_release move_files
 
