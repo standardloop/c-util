@@ -31,7 +31,7 @@ extern StringArr *EveryoneExplodeNow(char *input_str, char delim)
     string_arr->strings = malloc(sizeof(char *) * string_arr->num_strings);
     if (string_arr->strings == NULL)
     {
-        free(string_arr);
+        FreeStringArr(string_arr);
         printf("[ERROR]: couldn't allocate memory for strings in side StringArr\n");
         return NULL;
     }
@@ -44,7 +44,7 @@ extern StringArr *EveryoneExplodeNow(char *input_str, char delim)
         {
             end = input_str;
             size_t entry_len = end - start;
-            char *entry = malloc(sizeof(char) * entry_len);
+            char *entry = malloc(sizeof(char) * (entry_len + 1));
             if (entry == NULL)
             {
                 printf("[FATAL]: cannot allocate mem for entry string\n");

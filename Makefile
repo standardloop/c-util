@@ -40,6 +40,14 @@ build_optimize:
 	-O3 \
 	-o $(EXECUTABLE_NAME)-optimize
 
+build_sanitize:
+	@$(CC) $(CC_FLAGS) \
+	main.c \
+	-fsanitize=address \
+	-fno-omit-frame-pointer \
+	$(SOURCE_FILES) \
+	-o $(EXECUTABLE_NAME)-sanitize
+
 run_optimize:
 	@./$(EXECUTABLE_NAME)-optimize
 

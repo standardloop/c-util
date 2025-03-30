@@ -55,4 +55,5 @@ dkms.conf
 main
 a.out
 util
+util-sanitize
 .vscode
