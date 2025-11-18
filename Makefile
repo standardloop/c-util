@@ -8,6 +8,7 @@ clean:
 	@rm -f $(EXECUTABLE_NAME)-optimize
 	@rm -f a.out
 	@rm -f $(DYLIB_NAME)
+	@rm -f $(DYLIB_NAME).zip
 
 build:
 	@$(CC) $(CC_FLAGS) \
@@ -58,14 +59,20 @@ run_sanitize:
 
 release: build_release move_files
 
+release_local_github: download_release move_files
+
 build_release:
 	@$(CC) \
 	$(SOURCE_FILES) \
 	-O3 \
 	-dynamiclib \
-	-current_version 1.0.0 \
+	-current_version $(RELEASE_VERSION) \
 	-o $(DYLIB_NAME)
 
 move_files:
 	@sudo mv $(DYLIB_NAME) $(DYLIB_PATH)
 	@sudo cp $(EXECUTABLE_NAME).h $(DYLIB_INCLUDE_PATH)
+
+download_release:
+	curl -O -J -L https://github.com/standardloop/c-util/releases/download/v$(RELEASE_VERSION)/$(DYLIB_NAME).zip
+	unzip $(DYLIB_NAME).zip
