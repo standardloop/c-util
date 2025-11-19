@@ -59,10 +59,10 @@ run_sanitize:
 
 release: build_release move_files
 
-release_local_github: download_release move_files
+release_local_github: download_release
 
 build_release:
-	@$(CC) \
+	@$(CC) $(CC_FLAGS) \
 	$(SOURCE_FILES) \
 	-O3 \
 	-dynamiclib \
@@ -73,6 +73,18 @@ move_files:
 	@sudo mv $(DYLIB_NAME) $(DYLIB_PATH)
 	@sudo cp $(EXECUTABLE_NAME).h $(DYLIB_INCLUDE_PATH)
 
+# local testing
 download_release:
-	curl -O -J -L https://github.com/standardloop/c-util/releases/download/v$(RELEASE_VERSION)/$(DYLIB_NAME).zip
-	unzip $(DYLIB_NAME).zip
+	mkir -p tmp && \
+	cd tmp && \
+	curl -O -J -L https://github.com/standardloop/c-util/releases/download/v0.0.1/libstandardloop-util.zip && \
+	unzip libstandardloop-util.zip && \
+	sudo mv libstandardloop-util.dylib /usr/local/lib/standardloop/ && \
+	sudo mv util.h /usr/local/include/standardloop/ && rm libstandardloop-util.zip
+
+lab:
+	@$(CC) $(CC_FLAGS) \
+	lab.c \
+	-L/usr/local/lib/standardloop \
+	-lstandardloop-util \
+	-o lab
