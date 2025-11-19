@@ -82,12 +82,16 @@ download_release:
 	sudo mv libstandardloop-util.dylib /usr/local/lib/standardloop/ && \
 	sudo mv util.h /usr/local/include/standardloop/ && rm libstandardloop-util.zip
 
-lab:
+.PHONY: lab FORCE
+
+lab: FORCE
 	@$(CC) $(CC_FLAGS) \
 	lab.c \
 	-L/usr/local/lib/standardloop \
 	-lstandardloop-util \
 	-o lab
+
+FORCE:
 
 clean_release:
 	sudo rm /usr/local/lib/standardloop/libstandardloop-util.dylib
