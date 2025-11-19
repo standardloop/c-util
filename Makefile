@@ -75,7 +75,7 @@ move_files:
 
 # local testing
 download_release:
-	mkir -p tmp && \
+	mkdir -p tmp && \
 	cd tmp && \
 	curl -O -J -L https://github.com/standardloop/c-util/releases/download/v0.0.1/libstandardloop-util.zip && \
 	unzip libstandardloop-util.zip && \
