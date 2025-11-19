@@ -88,3 +88,7 @@ lab:
 	-L/usr/local/lib/standardloop \
 	-lstandardloop-util \
 	-o lab
+
+clean_release:
+	sudo rm /usr/local/lib/standardloop/libstandardloop-util.dylib
+	sudo rm /usr/local/include/standardloop/util.h
