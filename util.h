@@ -1,6 +1,11 @@
 #ifndef STANDARDLOOP_UTIL_H
 #define STANDARDLOOP_UTIL_H
 
+#define STANDARDLOOP_UTIL_H_MAJOR_VERSION 0
+#define STANDARDLOOP_UTIL_H_MINOR_VERSION 0
+#define STANDARDLOOP_UTIL_H_PATCH_VERSION 1
+#define STANDARDLOOP_UTIL_H_VERSION "0.0.1"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
