@@ -57,5 +57,6 @@ a.out
 util
 util-sanitize
 .vscode
-
 lab
+.task
+tmp
