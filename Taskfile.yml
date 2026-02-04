@@ -13,7 +13,7 @@ vars:
   DYLIB_NAME: libstandardloop-util.dylib
   DYLIB_PATH: /usr/local/lib/standardloop/
   DYLIB_INCLUDE_PATH: /usr/local/include/standardloop/
-  RELEASE_VERSION: 0.0.3
+  RELEASE_VERSION: 0.0.4
 
 tasks:
   default:
@@ -26,7 +26,7 @@ tasks:
       - cat util.h | grep -q {{.RELEASE_VERSION}}
       - cat util.h | grep -q "MAJOR_VERSION 0"
       - cat util.h | grep -q "MINOR_VERSION 0"
-      - cat util.h | grep -q "PATCH_VERSION 3"
+      - cat util.h | grep -q "PATCH_VERSION 4"
 
   release:
     deps:
@@ -99,8 +99,8 @@ tasks:
         {{.CC}} {{.CC_FLAGS}} \
         lab.c \
         {{range .SOURCE_FILES}} {{.}} {{end}} \
-        -L/usr/local/lib/standardloop \
-        -lstandardloop-util \
+        -fsanitize=address \
+        -fno-omit-frame-pointer \
         -o {{.LAB_EXECUTABLE_NAME}}
     sources:
       - "*.c"

@@ -76,7 +76,6 @@ extern void FreeStringArr(StringArr *string_arr)
 {
     if (string_arr == NULL || string_arr->num_strings == 0)
     {
-        printf("[DEBUG]: nothing to free\n");
         return;
     }
     int entry_count = 0;
@@ -115,4 +114,22 @@ extern void PrintStringArr(StringArr *string_arr)
         }
     }
     printf("\n");
+}
+
+extern char **StringArrToNormalStringArrShallow(StringArr *arr)
+{
+    if (arr == NULL || arr->num_strings == 0 || arr->strings == NULL)
+    {
+        return NULL;
+    }
+    char **return_value = malloc(sizeof(char *) * arr->num_strings);
+    if (return_value == NULL)
+    {
+        return NULL;
+    }
+    for (int i = 0; i < arr->num_strings; i++)
+    {
+        return_value[i] = arr->strings[i];
+    }
+    return return_value;
 }
