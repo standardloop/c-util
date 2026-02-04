@@ -82,7 +82,6 @@ typedef struct
 } StringArr;
 
 extern StringArr *EveryoneExplodeNow(char *, char);
-extern char **StringArrToNormalStringArrShallow(StringArr *);
 extern void FreeStringArr(StringArr *);
 extern void PrintStringArr(StringArr *);
 // ————————— EXPLODE END —————————
