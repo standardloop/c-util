@@ -13,7 +13,7 @@ vars:
   DYLIB_NAME: libstandardloop-util.dylib
   DYLIB_PATH: /usr/local/lib/standardloop/
   DYLIB_INCLUDE_PATH: /usr/local/include/standardloop/
-  RELEASE_VERSION: 0.0.5
+  RELEASE_VERSION: 0.0.6
 
 tasks:
   default:
@@ -26,7 +26,7 @@ tasks:
       - cat util.h | grep -q {{.RELEASE_VERSION}}
       - cat util.h | grep -q "MAJOR_VERSION 0"
       - cat util.h | grep -q "MINOR_VERSION 0"
-      - cat util.h | grep -q "PATCH_VERSION 5"
+      - cat util.h | grep -q "PATCH_VERSION 6"
 
   release:
     deps:
@@ -99,13 +99,26 @@ tasks:
         {{.CC}} {{.CC_FLAGS}} \
         lab.c \
         {{range .SOURCE_FILES}} {{.}} {{end}} \
+        -o {{.LAB_EXECUTABLE_NAME}}
+    sources:
+      - "*.c"
+    generates:
+      - "{{.LAB_EXECUTABLE_NAME}}"
+  
+  lab:build-sanitize:
+    run: once
+    cmds:
+      - |
+        {{.CC}} {{.CC_FLAGS}} \
+        lab.c \
+        {{range .SOURCE_FILES}} {{.}} {{end}} \
         -fsanitize=address \
         -fno-omit-frame-pointer \
         -o {{.LAB_EXECUTABLE_NAME}}
     sources:
       - "*.c"
     generates:
-      - "{{.LAB_EXECUTABLE_NAME}}"
+      - "{{.LAB_EXECUTABLE_NAME}}-sanitize"
 
   lab:run:
     deps:

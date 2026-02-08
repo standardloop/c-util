@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <errno.h>
 
 #include "./util.h"
 
@@ -8,12 +9,14 @@ extern StringArr *EveryoneExplodeNow(char *input_str, char delim)
 {
     if (input_str == NULL || delim == NULL_CHAR)
     {
+        errno = EINVAL;
         return NULL;
     }
     StringArr *string_arr = malloc(sizeof(StringArr));
     if (string_arr == NULL)
     {
         printf("[ERROR]: couldn't allocate memory for StringArr\n");
+        errno = ENOMEM;
         return NULL;
     }
 
@@ -33,6 +36,7 @@ extern StringArr *EveryoneExplodeNow(char *input_str, char delim)
     {
         FreeStringArr(string_arr);
         printf("[ERROR]: couldn't allocate memory for strings in side StringArr\n");
+        errno = ENOMEM;
         return NULL;
     }
     char *start = input_str;
@@ -69,6 +73,92 @@ extern StringArr *EveryoneExplodeNow(char *input_str, char delim)
             input_str++;
         }
     }
+    return string_arr;
+}
+
+extern StringArr *EveryoneExplodeNowHandleQuotes(char *input_str, char delim, char quotes_char)
+{
+    if (input_str == NULL || delim == NULL_CHAR || delim == quotes_char)
+    {
+        errno = EINVAL;
+        return NULL;
+    }
+    StringArr *string_arr = malloc(sizeof(StringArr));
+    if (string_arr == NULL)
+    {
+        errno = ENOMEM;
+        printf("[ERROR]: couldn't allocate memory for StringArr\n");
+        return NULL;
+    }
+
+    int delim_count = 0;
+    int len = strlen(input_str);
+    bool inside_quotes = false;
+    for (int i = 0; i < len; i++)
+    {
+        if (input_str[i] == quotes_char)
+        {
+            inside_quotes = !inside_quotes;
+        }
+        else if (input_str[i] == delim)
+        {
+            if (!inside_quotes)
+            {
+                delim_count++;
+            }
+        }
+    }
+    // printf("%d\n", delim_count);
+    string_arr->num_strings = delim_count + 1;
+    string_arr->strings = malloc(sizeof(char *) * string_arr->num_strings);
+    if (string_arr->strings == NULL)
+    {
+        FreeStringArr(string_arr);
+        errno = ENOMEM;
+        return NULL;
+    }
+
+    char *start = input_str;
+    char *end = NULL;
+    int entry_count = 0;
+    inside_quotes = false;
+    while (entry_count < string_arr->num_strings)
+    {
+        if (*input_str == quotes_char)
+        {
+            inside_quotes = !inside_quotes;
+        }
+        if (!inside_quotes && (*input_str == delim || *input_str == NULL_CHAR))
+        {
+            end = input_str;
+            size_t entry_len = end - start;
+            entry_len++; // \0
+            char *entry = malloc(sizeof(char) * entry_len);
+            if (entry == NULL)
+            {
+                printf("[FATAL]: cannot allocate mem for entry string\n");
+                FreeStringArr(string_arr);
+                errno = ENOMEM;
+                return NULL;
+            }
+            char *entry_iterator = entry;
+            while (start != end)
+            {
+                *entry_iterator = *start;
+                entry_iterator++;
+                start++;
+            }
+            *entry_iterator = NULL_CHAR;
+            string_arr->strings[entry_count] = entry;
+            start = input_str + 1;
+            entry_count++;
+        }
+        if (*input_str != NULL_CHAR)
+        {
+            input_str++;
+        }
+    }
+
     return string_arr;
 }
 

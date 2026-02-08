@@ -3,8 +3,8 @@
 
 #define STANDARDLOOP_UTIL_H_MAJOR_VERSION 0
 #define STANDARDLOOP_UTIL_H_MINOR_VERSION 0
-#define STANDARDLOOP_UTIL_H_PATCH_VERSION 5
-#define STANDARDLOOP_UTIL_H_VERSION "0.0.5"
+#define STANDARDLOOP_UTIL_H_PATCH_VERSION 6
+#define STANDARDLOOP_UTIL_H_VERSION "0.0.6"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -83,6 +83,8 @@ typedef struct
 } StringArr;
 
 extern StringArr *EveryoneExplodeNow(char *, char);
+extern StringArr *EveryoneExplodeNowHandleQuotes(char *, char, char);
+
 extern void FreeStringArr(StringArr *);
 extern void PrintStringArr(StringArr *);
 // ————————— EXPLODE END —————————
