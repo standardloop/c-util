@@ -2,7 +2,7 @@
 version: '3'
 
 vars:
-  CC: gcc
+  CC: clang
   CC_FLAGS: "-Werror -Wextra -Wall -Wfree-nonheap-object -std=c17"
   LAB_EXECUTABLE_NAME: lab
   SOURCE_FILES:
@@ -13,7 +13,7 @@ vars:
   DYLIB_NAME: libstandardloop-util.dylib
   DYLIB_PATH: /usr/local/lib/standardloop/
   DYLIB_INCLUDE_PATH: /usr/local/include/standardloop/
-  RELEASE_VERSION: 0.0.6
+  RELEASE_VERSION: 0.0.7
 
 tasks:
   default:
@@ -26,7 +26,7 @@ tasks:
       - cat util.h | grep -q {{.RELEASE_VERSION}}
       - cat util.h | grep -q "MAJOR_VERSION 0"
       - cat util.h | grep -q "MINOR_VERSION 0"
-      - cat util.h | grep -q "PATCH_VERSION 6"
+      - cat util.h | grep -q "PATCH_VERSION 7"
 
   release:
     deps:
