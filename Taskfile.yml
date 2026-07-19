@@ -13,7 +13,7 @@ vars:
   DYLIB_NAME: libstandardloop-util.dylib
   DYLIB_PATH: /usr/local/lib/standardloop/
   DYLIB_INCLUDE_PATH: /usr/local/include/standardloop/
-  RELEASE_VERSION: 0.0.7
+  RELEASE_VERSION: 0.0.8
 
 tasks:
   default:
@@ -26,7 +26,7 @@ tasks:
       - cat util.h | grep -q {{.RELEASE_VERSION}}
       - cat util.h | grep -q "MAJOR_VERSION 0"
       - cat util.h | grep -q "MINOR_VERSION 0"
-      - cat util.h | grep -q "PATCH_VERSION 7"
+      - cat util.h | grep -q "PATCH_VERSION 8"
 
   release:
     deps:
