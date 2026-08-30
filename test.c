@@ -35,9 +35,26 @@ void testExplode()
     testEveryoneExplodeNowHandleQuotes();
 }
 
+void testGetEnv()
+{
+    const char *test = GetEnv("missing", "default");
+    assert(test != NULL);
+    assert(strcmp(test, "default") == 0);
+
+    assert(setenv("MY_VAR", "testing", 1) == 0);
+    const char *have = GetEnv("MY_VAR", "not needed");
+    assert(have != NULL);
+    assert(strcmp(have, "testing") == 0);
+}
+
+void testEnv()
+{
+    testGetEnv();
+}
+
 int main(void)
 {
     testExplode();
-
+    testEnv();
     return 0;
 }
