@@ -1,6 +1,6 @@
 # c-util
 
-https://github.com/standardloop/c-util
+[https://github.com/standardloop/c-util](https://github.com/standardloop/c-util)
 
 [![GitHub Release](https://img.shields.io/github/v/release/standardloop/c-util?sort=semver)](https://github.com/standardloop/c-util/releases) ![Platform: macOS](https://img.shields.io/badge/platform-macOS-000000?style=flat&logo=apple&logoColor=white) ![C Version](https://img.shields.io/badge/C_Standard-C17-00599C?logo=c&logoColor=white)
 
