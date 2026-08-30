@@ -6,9 +6,9 @@
 #define STANDARDLOOP_UTIL_H_PATCH_VERSION 8
 #define STANDARDLOOP_UTIL_H_VERSION "0.0.8"
 
+#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdbool.h>
 #include <string.h>
 
 #define ALWAYS 1
@@ -69,6 +69,7 @@ extern char *PutQuotesAroundString(char *, bool);
 
 // ————————— ENV START —————————
 extern const char *GetEnv(char *, char *);
+extern void TestEnv();
 // ————————— ENV END —————————
 
 // ————————— REGEX START —————————
@@ -88,6 +89,7 @@ extern StringArr *EveryoneExplodeNowHandleQuotes(char *, char, char);
 
 extern void FreeStringArr(StringArr *);
 extern void PrintStringArr(StringArr *);
+extern void TestExplode();
 // ————————— EXPLODE END —————————
 
 #endif

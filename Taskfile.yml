@@ -1,15 +1,18 @@
 ---
-version: '3'
+version: "3"
 
 vars:
   CC: clang
   CC_FLAGS: "-Werror -Wextra -Wall -Wfree-nonheap-object -std=c17"
-  test_EXECUTABLE_NAME: test
+  TEST_EXECUTABLE_NAME: test
   SOURCE_FILES:
     - util.c
     - env.c
     - explode.c
     - regex.c
+  TEST_SOURCE_FILES:
+    - env.test.c
+    - explode.test.c
   DYLIB_NAME: libstandardloop-util.dylib
   DYLIB_PATH: /usr/local/lib/standardloop/
   DYLIB_INCLUDE_PATH: /usr/local/include/standardloop/
@@ -99,11 +102,12 @@ tasks:
         {{.CC}} {{.CC_FLAGS}} \
         test.c \
         {{range .SOURCE_FILES}} {{.}} {{end}} \
-        -o {{.test_EXECUTABLE_NAME}}
+        {{range .TEST_SOURCE_FILES}} {{.}} {{end}} \
+        -o {{.TEST_EXECUTABLE_NAME}}
     sources:
       - "*.c"
     generates:
-      - "{{.test_EXECUTABLE_NAME}}"
+      - "{{.TEST_EXECUTABLE_NAME}}"
 
   test:build-sanitize:
     run: once
@@ -112,24 +116,25 @@ tasks:
         {{.CC}} {{.CC_FLAGS}} \
         test.c \
         {{range .SOURCE_FILES}} {{.}} {{end}} \
+        {{range .TEST_SOURCE_FILES}} {{.}} {{end}} \
         -fsanitize=address \
         -fno-omit-frame-pointer \
-        -o {{.test_EXECUTABLE_NAME}}
+        -o {{.TEST_EXECUTABLE_NAME}}-sanitize
     sources:
       - "*.c"
     generates:
-      - "{{.test_EXECUTABLE_NAME}}-sanitize"
+      - "{{.TEST_EXECUTABLE_NAME}}-sanitize"
 
   test:run:
     deps:
       - test:build
     cmds:
-      - ./{{.test_EXECUTABLE_NAME}}
+      - ./{{.TEST_EXECUTABLE_NAME}}
 
   test:leaks:
     deps:
       - test:build
     cmds:
       - cp /usr/local/lib/standardloop/libstandardloop-util.dylib ./ # to get around sips we need to move dylibs to local dir :(
-      - leaks --atExit -- ./{{.test_EXECUTABLE_NAME}}
+      - leaks --atExit -- ./{{.TEST_EXECUTABLE_NAME}}
       - rm libstandardloop-util.dylib
