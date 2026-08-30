@@ -14,7 +14,7 @@ vars:
   TEST_SOURCE_FILES:
     - env.test.c
     - explode.test.c
-    - stringhelpers.test.c 
+    - stringhelpers.test.c
   DYLIB_NAME: libstandardloop-util.dylib
   DYLIB_PATH: /usr/local/lib/standardloop/
   DYLIB_INCLUDE_PATH: /usr/local/include/standardloop/
@@ -22,10 +22,13 @@ vars:
 
 tasks:
   default:
-    deps:
-      - test
+    silent: true
+    desc: "Show all avaiable tasks."
+    cmds:
+      - task --list-all
 
   check-version:
+    internal: true
     silent: true
     cmds:
       - cat util.h | grep -q {{.RELEASE_VERSION}}
@@ -34,12 +37,15 @@ tasks:
       - cat util.h | grep -q "PATCH_VERSION 8"
 
   release:
+    desc: "Release the dylib."
+    internal: true
     deps:
       - check-version
       - release:build
       - release:move-files
 
   release:build:
+    desc: "Build the dylib."
     run: once
     deps:
       - check-version
@@ -58,6 +64,7 @@ tasks:
       - "{{.DYLIB_NAME}}"
 
   release:move-files:
+    internal: true
     deps:
       - release:build
     cmds:
@@ -67,6 +74,7 @@ tasks:
 
   release:clean:
     ignore_error: true
+    internal: true
     cmds:
       - sudo -v
       - sudo rm -f {{.DYLIB_PATH}}/{{.DYLIB_NAME}}
@@ -74,6 +82,8 @@ tasks:
 
   # local test
   remote:download:
+    desc: "Download the released dylib from the GitHub release."
+    internal: false
     run: once
     cmds:
       - |
@@ -84,6 +94,7 @@ tasks:
         rm libstandardloop-util.zip
 
   remote:move:
+    desc: "Move the dylib and header file into paths for other programs to access."
     deps:
       - remote:download
     cmds:
@@ -91,14 +102,16 @@ tasks:
         cd tmp/
         sudo -v
         sudo mv {{.DYLIB_NAME}} {{.DYLIB_PATH}}
-        sudo mv util.h {{.DYLIB_INCLUDE_PATH}}
+        sudo cp util.h {{.DYLIB_INCLUDE_PATH}}
 
   test:
+    desc: "Build and Run the test program."
     deps:
       - test:run
 
   test:build:
     run: once
+    desc: "Build the test program."
     cmds:
       - |
         {{.CC}} {{.CC_FLAGS}} \
@@ -112,6 +125,7 @@ tasks:
       - "{{.TEST_EXECUTABLE_NAME}}"
 
   test:build-sanitize:
+    desc: "Build the test with address sanitizer on."
     run: once
     cmds:
       - |
@@ -128,15 +142,17 @@ tasks:
       - "{{.TEST_EXECUTABLE_NAME}}-sanitize"
 
   test:run:
+    desc: "Run the test program."
     deps:
       - test:build
     cmds:
       - ./{{.TEST_EXECUTABLE_NAME}}
 
   test:leaks:
+    desc: "Run macOS leaks on the test program."
     deps:
       - test:build
     cmds:
-      - cp /usr/local/lib/standardloop/libstandardloop-util.dylib ./ # to get around sips we need to move dylibs to local dir :(
+      # - cp /usr/local/lib/standardloop/libstandardloop-util.dylib ./ # to get around sips we need to move dylibs to local dir :(
       - leaks --atExit -- ./{{.TEST_EXECUTABLE_NAME}}
-      - rm libstandardloop-util.dylib
+      # - rm libstandardloop-util.dylib
