@@ -47,7 +47,7 @@
 
 #define pass (void)0
 
-// ————————— UTIL START —————————
+// ————————— TEMP START —————————
 // TODO: combine these 3 functions after library is built
 extern void CopyString(char *, char *, size_t, size_t);
 extern void CopyStringCanary(char *, char *, u_int64_t);
@@ -55,17 +55,20 @@ extern void CopyStringServer(char *, char *, size_t, size_t, bool);
 
 extern char *Int64ToString(int64_t);
 
-extern bool IsCharInString(const char *, char);
-extern size_t NumCharInString(const char *, char);
 extern char *QuickAllocatedString(char *);
 extern void PrintSpaces(int);
 extern void PrintBuffer(char *, size_t, bool);
+// ————————— TEMP END —————————
 
+// ————————— STRING HELPERS START —————————
 extern void StringToLower(char *);
 extern void StringToUpper(char *);
-
+extern bool IsCharInString(const char *, char);
+extern size_t NumCharInString(const char *, char);
 extern char *PutQuotesAroundString(char *, bool);
-// ————————— UTIL END —————————
+
+extern void TestStringHelpers();
+// ————————— STRING HELPERS END —————————
 
 // ————————— ENV START —————————
 extern const char *GetEnv(char *, char *);

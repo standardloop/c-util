@@ -8,5 +8,6 @@ int main(void)
 {
     TestExplode();
     TestEnv();
+    TestStringHelpers();
     return 0;
 }
