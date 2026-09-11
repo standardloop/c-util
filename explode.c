@@ -1,7 +1,7 @@
+#include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <errno.h>
 
 #include "./util.h"
 
@@ -35,7 +35,8 @@ extern StringArr *EveryoneExplodeNow(char *input_str, char delim)
     if (string_arr->strings == NULL)
     {
         FreeStringArr(string_arr);
-        printf("[ERROR]: couldn't allocate memory for strings in side StringArr\n");
+        printf("[ERROR]: couldn't allocate memory for strings in side "
+               "StringArr\n");
         errno = ENOMEM;
         return NULL;
     }
@@ -76,7 +77,8 @@ extern StringArr *EveryoneExplodeNow(char *input_str, char delim)
     return string_arr;
 }
 
-extern StringArr *EveryoneExplodeNowHandleQuotes(char *input_str, char delim, char quotes_char)
+extern StringArr *EveryoneExplodeNowHandleQuotes(char *input_str, char delim,
+                                                 char quotes_char)
 {
     if (input_str == NULL || delim == NULL_CHAR || delim == quotes_char)
     {
