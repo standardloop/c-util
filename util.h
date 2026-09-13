@@ -68,17 +68,25 @@ extern bool IsCharInString(const char *, char);
 extern size_t NumCharInString(const char *, char);
 extern char *PutQuotesAroundString(char *, bool);
 
+/// @cond INTERNAL
 extern void TestStringHelpers();
+/// @endcond
+
 // ————————— STRING HELPERS END —————————
 
 // ————————— ENV START —————————
 extern const char *GetEnv(char *, char *);
+/// @cond INTERNAL
 extern void TestEnv();
+/// @endcond
+
 // ————————— ENV END —————————
 
 // ————————— REGEX START —————————
+/// @cond INTERNAL
 extern bool RegexBoolMatch(char *, char *);
 extern char *RegexReturnMatch(char *, char *, int *, int *);
+/// @endcond
 // ————————— REGEX END —————————
 
 // ————————— EXPLODE START —————————
@@ -93,7 +101,10 @@ extern StringArr *EveryoneExplodeNowHandleQuotes(char *, char, char);
 
 extern void FreeStringArr(StringArr *);
 extern void PrintStringArr(StringArr *);
+
+/// @cond INTERNAL
 extern void TestExplode();
+/// @endcond
 // ————————— EXPLODE END —————————
 
 #endif

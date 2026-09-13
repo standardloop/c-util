@@ -316,42 +316,10 @@ char * PutQuotesAroundString(char *, bool)
 
 ---
 
-### TestStringHelpers
-
-```cpp
-void TestStringHelpers()
-```
-
----
-
 ### GetEnv
 
 ```cpp
 const char * GetEnv(char *, char *)
-```
-
----
-
-### TestEnv
-
-```cpp
-void TestEnv()
-```
-
----
-
-### RegexBoolMatch
-
-```cpp
-bool RegexBoolMatch(char *, char *)
-```
-
----
-
-### RegexReturnMatch
-
-```cpp
-char * RegexReturnMatch(char *, char *, int *, int *)
 ```
 
 ---
@@ -384,14 +352,6 @@ void FreeStringArr(StringArr *)
 
 ```cpp
 void PrintStringArr(StringArr *)
-```
-
----
-
-### TestExplode
-
-```cpp
-void TestExplode()
 ```
 
 ## StringArr
