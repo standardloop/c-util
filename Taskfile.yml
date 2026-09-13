@@ -1,12 +1,13 @@
 ---
 version: "3"
 
-silent: true
+# silent: true
+
+includes:
+  c: https://raw.githubusercontent.com/standardloop/taskfiles/refs/heads/main/c.yml # can pin in future
+  # c: ../taskfiles/c.yml
 
 vars:
-  CC: clang
-  CC_FLAGS: "-Werror -Wextra -Wall -Wfree-nonheap-object -std=c17"
-  TEST_EXECUTABLE_NAME: test
   SOURCE_FILES:
     - temp.c
     - stringhelpers.c
@@ -18,149 +19,50 @@ vars:
     - explode.test.c
     - stringhelpers.test.c
   DYLIB_NAME: libstandardloop-util.dylib
-  DYLIB_PATH: /usr/local/lib/standardloop/
-  DYLIB_INCLUDE_PATH: /usr/local/include/standardloop/
-  RELEASE_VERSION: 0.0.8
-
-includes:
-  c: https://raw.githubusercontent.com/standardloop/taskfiles/refs/heads/main/c.yml # can pin in future
+  DYLIB_HEADER: util.h
+  # DYN_LIBS_USED: "-lstandardloop-util"
 
 tasks:
   default:
-    silent: true
-    desc: "Show all avaiable tasks."
     cmds:
-      - task --list-all
+      - task: test:build
 
-  check-version:
-    internal: true
-    silent: true
-    cmds:
-      - cat util.h | grep -q {{.RELEASE_VERSION}}
-      - cat util.h | grep -q "MAJOR_VERSION 0"
-      - cat util.h | grep -q "MINOR_VERSION 0"
-      - cat util.h | grep -q "PATCH_VERSION 8"
-
+  # GH_RELEASE_VERSION is set by CI
   release:
-    desc: "Release the dylib."
-    internal: true
-    deps:
-      - check-version
-      - release:build
-      - release:move-files
-
-  release:build:
-    desc: "Build the dylib."
-    run: once
-    deps:
-      - check-version
+    # deps:
+    #   - dependencies
     cmds:
-      - |
-        {{.CC}} {{.CC_FLAGS}} \
-        {{range .SOURCE_FILES}} {{.}} {{end}} \
-        -O3 \
-        -dynamiclib \
-        -current_version {{.RELEASE_VERSION}} \
-        -compatibility_version {{.RELEASE_VERSION}} \
-        -o {{.DYLIB_NAME}}
-    sources:
-      - "*.c"
-    generates:
-      - "{{.DYLIB_NAME}}"
+      - task: c:release
 
-  release:move-files:
-    internal: true
-    deps:
-      - release:build
-    cmds:
-      - sudo -v
-      - sudo mv {{.DYLIB_NAME}} {{.DYLIB_PATH}}
-      - sudo cp util.h {{.DYLIB_INCLUDE_PATH}}
-
-  release:clean:
-    ignore_error: true
-    internal: true
-    cmds:
-      - sudo -v
-      - sudo rm -f {{.DYLIB_PATH}}/{{.DYLIB_NAME}}
-      - sudo rm -f {{.DYLIB_INCLUDE_PATH}}/util.h
-
-  # local test
-  remote:download:
-    desc: "Download the released dylib from the GitHub release."
-    internal: false
-    run: once
-    cmds:
-      - |
-        mkdir -p tmp
-        cd tmp
-        curl -O -J -L https://github.com/standardloop/c-util/releases/download/v{{.RELEASE_VERSION}}/libstandardloop-util.zip
-        unzip libstandardloop-util.zip
-        rm libstandardloop-util.zip
-
-  remote:move:
-    desc: "Move the dylib and header file into paths for other programs to access."
-    deps:
-      - remote:download
-    cmds:
-      - |
-        cd tmp/
-        sudo -v
-        sudo mv {{.DYLIB_NAME}} {{.DYLIB_PATH}}
-        sudo cp util.h {{.DYLIB_INCLUDE_PATH}}
+  # dependencies:
+  #   deps:
+  #     - c:dependencies:util
 
   test:
-    desc: "Build and Run the test program."
     deps:
       - test:run
 
-  test:build:
-    run: once
-    desc: "Build the test program."
-    cmds:
-      - |
-        {{.CC}} {{.CC_FLAGS}} \
-        test.c \
-        {{range .SOURCE_FILES}} {{.}} {{end}} \
-        {{range .TEST_SOURCE_FILES}} {{.}} {{end}} \
-        -o {{.TEST_EXECUTABLE_NAME}}
-    sources:
-      - "*.c"
-    generates:
-      - "{{.TEST_EXECUTABLE_NAME}}"
-
   test:build-sanitize:
-    desc: "Build the test with address sanitizer on."
-    run: once
+    # deps:
+    #   - dependencies
     cmds:
-      - |
-        {{.CC}} {{.CC_FLAGS}} \
-        test.c \
-        {{range .SOURCE_FILES}} {{.}} {{end}} \
-        {{range .TEST_SOURCE_FILES}} {{.}} {{end}} \
-        -fsanitize=address \
-        -fno-omit-frame-pointer \
-        -o {{.TEST_EXECUTABLE_NAME}}-sanitize
-    sources:
-      - "*.c"
-    generates:
-      - "{{.TEST_EXECUTABLE_NAME}}-sanitize"
+      - task: c:test:build-sanitize
+
+  test:build:
+    # deps:
+    #   - dependencies
+    cmds:
+      - task: c:test:build
 
   test:run:
-    desc: "Run the test program."
     deps:
       - test:build
     cmds:
       - ./{{.TEST_EXECUTABLE_NAME}}
 
-  test:leaks:
-    desc: "Run macOS leaks on the test program."
+  clean:
     deps:
-      - test:build
-    cmds:
-      # - cp /usr/local/lib/standardloop/libstandardloop-util.dylib ./ # to get around sips we need to move dylibs to local dir :(
-      - leaks --atExit -- ./{{.TEST_EXECUTABLE_NAME}}
-      # - rm libstandardloop-util.dylib
+      - c:test:clean
 
   fmt:
     deps:

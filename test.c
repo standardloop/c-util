@@ -6,8 +6,10 @@
 
 int main(void)
 {
+    printf("starting tests\n");
     TestExplode();
     TestEnv();
     TestStringHelpers();
+    printf("done!\n");
     return 0;
 }

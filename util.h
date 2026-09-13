@@ -1,10 +1,11 @@
+/**
+ * @file util.h
+ * @headerfile util.h <standardloop/util.h>
+ * @brief A C library random utility functions.
+ */
+
 #ifndef STANDARDLOOP_UTIL_H
 #define STANDARDLOOP_UTIL_H
-
-#define STANDARDLOOP_UTIL_H_MAJOR_VERSION 0
-#define STANDARDLOOP_UTIL_H_MINOR_VERSION 0
-#define STANDARDLOOP_UTIL_H_PATCH_VERSION 8
-#define STANDARDLOOP_UTIL_H_VERSION "0.0.8"
 
 #include <stdbool.h>
 #include <stdio.h>

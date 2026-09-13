@@ -77,3 +77,9 @@ task: Available tasks for this project:
 * test:leaks:                Run macOS leaks on the test program.
 * test:run:                  Run the test program.
 ```
+
+## Precommit
+
+This repo uses [prek](https://github.com/j178/prek).
+
+Please run `prek install`.
