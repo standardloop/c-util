@@ -78,6 +78,12 @@ task: Available tasks for this project:
 * test:run:                  Run the test program.
 ```
 
+## Docs
+
+Docs are generated a first generated with `doxygen` as `xml` and then `moxygen` reads the xml to output markdown in the `docs/` folder.
+
+This repo uses reusable tasks from https://github.com/standardloop/taskfiles/
+
 ## Precommit
 
 This repo uses [prek](https://github.com/j178/prek).
