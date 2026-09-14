@@ -10,83 +10,119 @@
 
 ---
 
-### Int64ToString
-
-```cpp
-char * Int64ToString(int64_t)
-```
-
----
-
-### QuickAllocatedString
-
-```cpp
-char * QuickAllocatedString(char *)
-```
-
----
-
-### PrintSpaces
-
-```cpp
-void PrintSpaces(int)
-```
-
----
-
-### PrintBuffer
-
-```cpp
-void PrintBuffer(char *, size_t, bool)
-```
-
----
-
 ### StringToLower
 
 ```cpp
-void StringToLower(char *)
+void StringToLower(char * s)
 ```
+
+Converts an input string s in place to all lowercase.
+
+#### Parameters
+
+| Parameter | Type     | Description       |
+| --------- | -------- | ----------------- |
+| `s`       | `char *` | The input string. |
 
 ---
 
 ### StringToUpper
 
 ```cpp
-void StringToUpper(char *)
+void StringToUpper(char * s)
 ```
+
+Converts an input string s in place to all uppercase.
+
+#### Parameters
+
+| Parameter | Type     | Description       |
+| --------- | -------- | ----------------- |
+| `s`       | `char *` | The input string. |
 
 ---
 
 ### IsCharInString
 
 ```cpp
-bool IsCharInString(const char *, char)
+bool IsCharInString(const char * input_str, char checker)
 ```
+
+Checks a string for a specific character.
+
+#### Returns
+
+true if the character is present, false if not.
+
+#### Parameters
+
+| Parameter   | Type           | Description             |
+| ----------- | -------------- | ----------------------- |
+| `input_str` | `const char *` | The input string.       |
+| `checker`   | `char`         | The character to check. |
 
 ---
 
 ### NumCharInString
 
 ```cpp
-size_t NumCharInString(const char *, char)
+size_t NumCharInString(const char * input_str, char checker)
 ```
+
+Checks a string for a specific character and returns the number of occurences.
+
+#### Returns
+
+The number of occurences.
+
+#### Parameters
+
+| Parameter   | Type           | Description             |
+| ----------- | -------------- | ----------------------- |
+| `input_str` | `const char *` | The input string.       |
+| `checker`   | `char`         | The character to check. |
 
 ---
 
 ### PutQuotesAroundString
 
 ```cpp
-char * PutQuotesAroundString(char *, bool)
+char * PutQuotesAroundString(char * input_str, bool free_input)
 ```
+
+Puts Quotes around a string and returns the new string.
+
+#### Returns
+
+The new string with quotes around it.
+
+#### Parameters
+
+| Parameter    | Type     | Description                                    |
+| ------------ | -------- | ---------------------------------------------- |
+| `input_str`  | `char *` | The string to duplicate and change.            |
+| `free_input` | `bool`   | If true, will free the input_str for convience |
 
 ---
 
 ### GetEnv
 
 ```cpp
-const char * GetEnv(char *, char *)
+const char * GetEnv(char * name, char * fallback)
 ```
+
+Looks up an environment variable with an optional fallback.
+
+#### Returns
+
+A string of the environment variable.
+
+#### Parameters
+
+| Parameter  | Type     | Description                                                         |
+| ---------- | -------- | ------------------------------------------------------------------- |
+| `name`     | `char *` | The name of the environment variable to look up.                    |
+| `fallback` | `char *` | The fallback default if the environment variable couldn't be found. |
 
 ---
 

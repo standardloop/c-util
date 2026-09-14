@@ -56,21 +56,52 @@
 extern void CopyString(char *, char *, size_t, size_t);
 extern void CopyStringCanary(char *, char *, u_int64_t);
 extern void CopyStringServer(char *, char *, size_t, size_t, bool);
-/// @endcond
 
 extern char *Int64ToString(int64_t);
 
 extern char *QuickAllocatedString(char *);
 extern void PrintSpaces(int);
 extern void PrintBuffer(char *, size_t, bool);
+/// @endcond
 // ————————— TEMP END —————————
 
 // ————————— STRING HELPERS START —————————
-extern void StringToLower(char *);
-extern void StringToUpper(char *);
-extern bool IsCharInString(const char *, char);
-extern size_t NumCharInString(const char *, char);
-extern char *PutQuotesAroundString(char *, bool);
+/**
+ * @brief Converts an input string s in place to all lowercase.
+ * @param s The input string.
+ */
+extern void StringToLower(char *s);
+
+/**
+ * @brief Converts an input string s in place to all uppercase.
+ * @param s The input string.
+ */
+extern void StringToUpper(char *s);
+
+/**
+ * @brief Checks a string for a specific character.
+ * @param input_str The input string.
+ * @param checker The character to check.
+ * @return true if the character is present, false if not.
+ */
+extern bool IsCharInString(const char *input_str, char checker);
+
+/**
+ * @brief Checks a string for a specific character and returns the number of
+ * occurences.
+ * @param input_str The input string.
+ * @param checker The character to check.
+ * @return The number of occurences.
+ */
+extern size_t NumCharInString(const char *input_str, char checker);
+
+/**
+ * @brief Puts Quotes around a string and returns the new string.
+ * @param input_str The string to duplicate and change.
+ * @param free_input If true, will free the input_str for convience
+ * @return The new string with quotes around it.
+ */
+extern char *PutQuotesAroundString(char *input_str, bool free_input);
 
 /// @cond INTERNAL
 extern void TestStringHelpers();
@@ -79,7 +110,14 @@ extern void TestStringHelpers();
 // ————————— STRING HELPERS END —————————
 
 // ————————— ENV START —————————
-extern const char *GetEnv(char *, char *);
+/**
+ * @brief Looks up an environment variable with an optional fallback.
+ * @param name The name of the environment variable to look up.
+ * @param fallback The fallback default if the environment variable couldn't be
+ * found.
+ * @return A string of the environment variable.
+ */
+extern const char *GetEnv(char *name, char *fallback);
 /// @cond INTERNAL
 extern void TestEnv();
 /// @endcond
@@ -134,6 +172,7 @@ extern StringArr *EveryoneExplodeNowHandleQuotes(char *input_str, char delim,
  * @param string_arr The StringArr to free.
  */
 extern void FreeStringArr(StringArr *string_arr);
+
 /**
  * @brief Pretty Print a StringArr for debugging.
  * @param string_arr The StringArr to print.
