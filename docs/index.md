@@ -2,245 +2,11 @@
 
 ## Classes
 
-| Name                      | Description |
-| ------------------------- | ----------- |
-| [`StringArr`](#stringarr) |             |
-
-## Macros
-
----
-
-### ALWAYS
-
-```cpp
-#define ALWAYS 1
-```
-
----
-
-### QUESTION_CHAR
-
-```cpp
-#define QUESTION_CHAR '?'
-```
-
----
-
-### EQUAL_CHAR
-
-```cpp
-#define EQUAL_CHAR '='
-```
-
----
-
-### AND_CHAR
-
-```cpp
-#define AND_CHAR '&'
-```
-
----
-
-### DOLLAR_CHAR
-
-```cpp
-#define DOLLAR_CHAR '$'
-```
-
----
-
-### CARROT_CHAR
-
-```cpp
-#define CARROT_CHAR '^'
-```
-
----
-
-### SPACE_CHAR
-
-```cpp
-#define SPACE_CHAR ' '
-```
-
----
-
-### TAB_CHAR
-
-```cpp
-#define TAB_CHAR '\t'
-```
-
----
-
-### NEWLINE_CHAR
-
-```cpp
-#define NEWLINE_CHAR '\n'
-```
-
----
-
-### CARRIAGE_CHAR
-
-```cpp
-#define CARRIAGE_CHAR '\r'
-```
-
----
-
-### DASH_MINUS_CHAR
-
-```cpp
-#define DASH_MINUS_CHAR '-'
-```
-
----
-
-### PLUS_CHAR
-
-```cpp
-#define PLUS_CHAR '+'
-```
-
----
-
-### DOT_CHAR
-
-```cpp
-#define DOT_CHAR '.'
-```
-
----
-
-### COMMA_CHAR
-
-```cpp
-#define COMMA_CHAR ','
-```
-
----
-
-### COLON_CHAR
-
-```cpp
-#define COLON_CHAR ':'
-```
-
----
-
-### DOUBLE_QUOTES_CHAR
-
-```cpp
-#define DOUBLE_QUOTES_CHAR '\"'
-```
-
----
-
-### SINGLE_QUOTES_CHAR
-
-```cpp
-#define SINGLE_QUOTES_CHAR '\''
-```
-
----
-
-### BACKSLASH_CHAR
-
-```cpp
-#define BACKSLASH_CHAR '\\'
-```
-
----
-
-### FORWARDLASH_CHAR
-
-```cpp
-#define FORWARDLASH_CHAR '/'
-```
-
----
-
-### BRACKET_OPEN_CHAR
-
-```cpp
-#define BRACKET_OPEN_CHAR '['
-```
-
----
-
-### BRACKET_CLOSE_CHAR
-
-```cpp
-#define BRACKET_CLOSE_CHAR ']'
-```
-
----
-
-### CURLY_OPEN_CHAR
-
-```cpp
-#define CURLY_OPEN_CHAR '{'
-```
-
----
-
-### CURLY_CLOSE_CHAR
-
-```cpp
-#define CURLY_CLOSE_CHAR '}'
-```
-
----
-
-### NULL_CHAR
-
-```cpp
-#define NULL_CHAR '\0'
-```
-
----
-
-### EOT_CHAR
-
-```cpp
-#define EOT_CHAR 4
-```
-
----
-
-### pass
-
-```cpp
-#define pass (void)0
-```
+| Name                      | Description                                                                                                                   |
+| ------------------------- | ----------------------------------------------------------------------------------------------------------------------------- |
+| [`StringArr`](#stringarr) | The [StringArr](#stringarr) struct, contains an array of strings and the variable holding the number of strings in the array. |
 
 ## Functions
-
----
-
-### CopyString
-
-```cpp
-void CopyString(char *, char *, size_t, size_t)
-```
-
----
-
-### CopyStringCanary
-
-```cpp
-void CopyStringCanary(char *, char *, u_int64_t)
-```
-
----
-
-### CopyStringServer
-
-```cpp
-void CopyStringServer(char *, char *, size_t, size_t, bool)
-```
 
 ---
 
@@ -327,45 +93,104 @@ const char * GetEnv(char *, char *)
 ### EveryoneExplodeNow
 
 ```cpp
-StringArr * EveryoneExplodeNow(char *, char)
+StringArr * EveryoneExplodeNow(char * input_str, char delim)
 ```
+
+Creates a [StringArr](#stringarr) based on an input string and a delimiter. For example, `[EveryoneExplodeNow](#everyoneexplodenow)("hello world", ' ')` will return `["hello", "world"]`.
+
+#### Returns
+
+The [StringArr](#stringarr)
+
+#### Parameters
+
+| Parameter   | Type     | Description                                    |
+| ----------- | -------- | ---------------------------------------------- |
+| `input_str` | `char *` | The input string.                              |
+| `delim`     | `char`   | What character to break the string about from. |
 
 ---
 
 ### EveryoneExplodeNowHandleQuotes
 
 ```cpp
-StringArr * EveryoneExplodeNowHandleQuotes(char *, char, char)
+StringArr * EveryoneExplodeNowHandleQuotes(char * input_str, char delim, char quotes_char)
 ```
+
+Creates a [StringArr](#stringarr) based on an input string and a delimiter. For example, `[EveryoneExplodeNow](#everyoneexplodenow)("hello world", ' ')` will return `["hello", "world"]` but also handle quotes, so delim characters in quotes will not be exploded.
+
+#### Returns
+
+The [StringArr](#stringarr)
+
+#### Parameters
+
+| Parameter     | Type     | Description                                    |
+| ------------- | -------- | ---------------------------------------------- |
+| `input_str`   | `char *` | The input string.                              |
+| `delim`       | `char`   | What character to break the string about from. |
+| `quotes_char` | `char`   | Which quote character to ignore from.          |
 
 ---
 
 ### FreeStringArr
 
 ```cpp
-void FreeStringArr(StringArr *)
+void FreeStringArr(StringArr * string_arr)
 ```
+
+Free all Strings inside a [StringArr](#stringarr) and the [StringArr](#stringarr) itself.
+
+#### Parameters
+
+| Parameter    | Type                        | Description                          |
+| ------------ | --------------------------- | ------------------------------------ |
+| `string_arr` | [`StringArr`](#stringarr) * | The [StringArr](#stringarr) to free. |
 
 ---
 
 ### PrintStringArr
 
 ```cpp
-void PrintStringArr(StringArr *)
+void PrintStringArr(StringArr * string_arr)
 ```
 
+Pretty Print a [StringArr](#stringarr) for debugging.
+
+#### Parameters
+
+| Parameter    | Type                        | Description                           |
+| ------------ | --------------------------- | ------------------------------------- |
+| `string_arr` | [`StringArr`](#stringarr) * | The [StringArr](#stringarr) to print. |
+
 ## StringArr
+
+```cpp
+#include <standardloop/util.h>
+```
 
 ```cpp
 struct StringArr
 ```
 
+The [StringArr](#stringarr) struct, contains an array of strings and the variable holding the number of strings in the array.
+
 ### Public Attributes
 
-| Return    | Name                          | Description |
-| --------- | ----------------------------- | ----------- |
-| `char **` | [`strings`](#strings)         |             |
-| `int`     | [`num_strings`](#num_strings) |             |
+| Return    | Name                          | Description                         |
+| --------- | ----------------------------- | ----------------------------------- |
+| `int`     | [`num_strings`](#num_strings) | The number of strings in the array. |
+| `char **` | [`strings`](#strings)         | The array of strings.               |
+
+---
+
+#### num_strings
+
+```cpp
+int num_strings
+```
+
+The number of strings in the array.
 
 ---
 
@@ -375,10 +200,4 @@ struct StringArr
 char ** strings
 ```
 
----
-
-#### num_strings
-
-```cpp
-int num_strings
-```
+The array of strings.
